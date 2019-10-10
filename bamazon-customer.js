@@ -29,8 +29,6 @@ function seeProducts() {
         });
     });
 }
-connection.end();
-seeProducts();
 
 //TODO create goShopping function 
 
@@ -64,7 +62,7 @@ function goShopping(){
   }]).then(function(answer) {
           connection.query("SELECT * FROM products WHERE item_id=?", answer.item_id, function(err, res) {
             if (err) reject(err);
-            resolve(res);
+            resolve(resolve);
         });
   }).then(function(result) {
     if (answer.stock_quantity > result[0].stock_quantity) {
@@ -86,13 +84,13 @@ function goShopping(){
                 connection.query("UPDATE products SET stock_quantity=? WHERE item_id=?", [newQuantity, item], function(err, res) {
                     if (err) reject(err);
                     console.log('Your total cost is $' + totalCost);
-                    // destroy connection
-                    connection.destroy();
+                    // end connection
+                    connection.end();
                 });
             } else {
                 console.log(object);
-                // destroy connection
-                connection.destroy();
+                // end connection
+                connection.end();
             }
     });
 }
