@@ -10,14 +10,12 @@ var connection = mysql.createConnection({
 });
 connection.connect(function(err) {
   if (err) throw err;
-  // runSearch();
-});
-
+  // search items
 seeProducts().then(function(result){
   result.forEach(function(products){
     console.log('\nItem ID: ' + products.item_id + '\nProduct: ' + products.product_name + '\nDepartment: ' + products.department_name  + '\nPrice: ' + products.price + '\nStock Quantity: ' + products.stock_quantity);
   });
-  .then(function(){
+  }).then(function(){
     return goShopping();
   });
 });
@@ -35,3 +33,66 @@ connection.end();
 seeProducts();
 
 //TODO create goShopping function 
+
+function goShopping(){
+  inquirer.prompt([{
+      name: 'item_id',
+      message: 'What is the ID',
+      type: 'input',
+      validate: function(value) {
+        if (isNaN(value) === false) {
+            return true;
+        }
+        else {
+          console.log('\nPlease enter a valid ID');
+          return false;
+        }
+       }
+  }, {
+    name: 'stock_quantity',
+    message: 'Quantity?',
+    type: 'input',
+    validate: function(value) {
+          if (isNaN(value) === false) {
+            return true;
+        }
+        else {
+          console.log('\nPlease enter a valid quantity');
+          return false;
+        }
+       }
+  }]).then(function(answer) {
+          connection.query("SELECT * FROM products WHERE item_id=?", answer.item_id, function(err, res) {
+            if (err) reject(err);
+            resolve(res);
+        });
+  }).then(function(result) {
+    if (answer.stock_quantity > result[0].stock_quantity) {
+      return "Insufficient quantity!";
+    }
+    else {
+      var object = {};
+      object.answer = answer;
+      object.result = result;
+      return object;
+    }
+  }).then(function(object) {
+            // if there was sufficient quantity
+            if (object.answer) {
+                var newQuantity = object.result[0].stock_quantity - object.answer.stock_quantity;
+                var item = object.answer.item_id;
+                var totalCost = (object.result[0].price * object.answer.stock_quantity).toFixed(2);
+                // query that updates the quantity of the item
+                connection.query("UPDATE products SET stock_quantity=? WHERE item_id=?", [newQuantity, item], function(err, res) {
+                    if (err) reject(err);
+                    console.log('Your total cost is $' + totalCost);
+                    // destroy connection
+                    connection.destroy();
+                });
+            } else {
+                console.log(object);
+                // destroy connection
+                connection.destroy();
+            }
+    });
+}
