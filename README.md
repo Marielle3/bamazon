@@ -1,6 +1,6 @@
 # bamazon
 
-<h1>Go shopping now at Bamazon! You can get your items as fast as BAM! 
+<h1>Go shopping now at Bamazon! You can get your items as fast as BAM!</h1>
   
  Here's how it works:
  Open up the product list to see what is on the market. Type in the number ID# of the item you are looking for and also how much you would like to buy of that item. (So far, this is where it ends) 
