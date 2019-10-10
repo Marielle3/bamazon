@@ -62,7 +62,7 @@ function goShopping(){
   }]).then(function(answer) {
           connection.query("SELECT * FROM products WHERE item_id=?", answer.item_id, function(err, res) {
             if (err) reject(err);
-            resolve(resolve);
+            resolve(res);
         });
   }).then(function(result) {
     if (answer.stock_quantity > result[0].stock_quantity) {
