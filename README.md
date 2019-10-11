@@ -1,6 +1,6 @@
 # bamazon
 
-<h1>Go shopping now at Bamazon! You can get your items as fast as BAM!</h1>
+<h1>Go shopping now at Bamazon!</h1>
   
  Here's how it works:
  
