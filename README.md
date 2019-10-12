@@ -8,6 +8,7 @@
  > To run in node app just write: node bamazon.js
  Open up the product list to see what is on the market. Type in the number ID# of the item you are looking for and also how much you would like to buy of that item. (So far, this is where it ends) 
 
+<h2>Images of the terminal when executed</h2>
 
 ![Image of terminal1](./images1/screenshot1.png)
 ![Image of terminal2](./images1/screenshot2.png)
