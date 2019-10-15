@@ -5,7 +5,7 @@ var connection = mysql.createConnection({
   host: "localhost",
   port: 3306,
   user: "root",
-  password: "",
+  password: "Jospar3233!",
   database: "bamazon"
 });
 connection.connect(function(err) {
@@ -25,18 +25,18 @@ function seeProducts() {
         // query for all items in products table
         connection.query("SELECT * FROM products", function(err, res) {
             if (err) reject(err);
+            console.log(res);
             resolve(res);
         });
     });
 }
 
 //TODO create goShopping function 
-
 function goShopping(){
   inquirer.prompt([{
       name: 'item_id',
       message: 'What is the ID',
-      type: 'input',
+      type: 'number',
       validate: function(value) {
         if (isNaN(value) === false) {
             return true;
@@ -47,9 +47,10 @@ function goShopping(){
         }
        }
   }, {
+    // asks user how may units they want of that item 
     name: 'stock_quantity',
-    message: 'Quantity?',
-    type: 'input',
+    message: 'How much do you want?',
+    type: 'number',
     validate: function(value) {
           if (isNaN(value) === false) {
             return true;
@@ -59,6 +60,8 @@ function goShopping(){
           return false;
         }
        }
+      //  unsure here if i should use update, instead I used SELECT to select the ID and then return 
+      // the updated units
   }]).then(function(answer) {
           connection.query("SELECT * FROM products WHERE item_id=?", answer.item_id, function(err, res) {
             if (err) reject(err);
@@ -69,6 +72,7 @@ function goShopping(){
       return "Insufficient quantity!";
     }
     else {
+      var object = stock_quantity;
       var object = {};
       object.answer = answer;
       object.result = result;
