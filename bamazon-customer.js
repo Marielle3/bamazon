@@ -78,23 +78,23 @@ function goShopping(){
       object.result = result;
       return object;
     }
-  }).then(function(object) {
-            // if there was sufficient quantity
-            if (object.answer) {
-                var newQuantity = object.result[0].stock_quantity - object.answer.stock_quantity;
-                var item = object.answer.item_id;
-                var totalCost = (object.result[0].price * object.answer.stock_quantity).toFixed(2);
-                // query that updates the quantity of the item
-                connection.query("UPDATE products SET stock_quantity=? WHERE item_id=?", [newQuantity, item], function(err, res) {
-                    if (err) reject(err);
-                    console.log('Your total cost is $' + totalCost);
-                    // end connection
-                    connection.end();
-                });
-            } else {
-                console.log(object);
-                // end connection
-                connection.end();
-            }
-    });
-}
+//   }).then(function(object) {
+//             // if there was sufficient quantity
+//             if (object.answer) {
+//                 var newQuantity = object.result[0].stock_quantity - object.answer.stock_quantity;
+//                 var item = object.answer.item_id;
+//                 var totalCost = (object.result[0].price * object.answer.stock_quantity).toFixed(2);
+//                 // query that updates the quantity of the item
+//                 connection.query("UPDATE products SET stock_quantity=? WHERE item_id=?", [newQuantity, item], function(err, res) {
+//                     if (err) reject(err);
+//                     console.log('Your total cost is $' + totalCost);
+//                     // end connection
+//                     connection.end();
+//                 });
+//             } else {
+//                 console.log(object);
+//                 // end connection
+//                 connection.end();
+//             }
+//     });
+// }
